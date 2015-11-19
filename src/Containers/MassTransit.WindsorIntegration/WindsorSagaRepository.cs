@@ -42,7 +42,7 @@ namespace MassTransit.WindsorIntegration
 
         public async Task Send<T>(ConsumeContext<T> context, ISagaPolicy<TSaga, T> policy, IPipe<SagaConsumeContext<TSaga, T>> next) where T : class
         {
-            using (_container.BeginScope())
+            using (_container.RequireScope())
             {
                 await _repository.Send(context, policy, next);
             }
@@ -51,7 +51,7 @@ namespace MassTransit.WindsorIntegration
         public async Task SendQuery<T>(SagaQueryConsumeContext<TSaga, T> context, ISagaPolicy<TSaga, T> policy, IPipe<SagaConsumeContext<TSaga, T>> next)
             where T : class
         {
-            using (_container.BeginScope())
+            using (_container.RequireScope())
             {
                 await _repository.SendQuery(context, policy, next);
             }

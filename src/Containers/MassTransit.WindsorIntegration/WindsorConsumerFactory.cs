@@ -33,7 +33,7 @@ namespace MassTransit.WindsorIntegration
         public async Task Send<TMessage>(ConsumeContext<TMessage> context, IPipe<ConsumerConsumeContext<TConsumer, TMessage>> next)
             where TMessage : class
         {
-            using (_container.BeginScope())
+            using (_container.RequireScope())
             {
                 var consumer = _container.Resolve<TConsumer>();
                 if (consumer == null)
